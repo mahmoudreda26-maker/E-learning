@@ -21,6 +21,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'bio',
+        'phone',
+        'image',
         'password',
     ];
 
@@ -46,4 +49,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+    public function progress()
+    {
+        return $this->hasMany(CourseProgress::class);
+    }
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
 }

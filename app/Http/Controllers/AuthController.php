@@ -50,9 +50,7 @@ public function submitLogin(LoginRequest $request)
         return redirect()->route('dashboard.student');
     }
 
-    return back()->withErrors([
-        'email' => 'Invalid credentials'
-    ])->withInput();
+    return  redirect()->route('login');
 }
     public function logout()
     {

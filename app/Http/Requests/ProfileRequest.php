@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,16 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => "required|email",
-            "password" => "required|string|min:6",
-            "remember" => "nullable|boolean",
+            //update update
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'bio' => 'nullable|string|max:500',
+            'image' => 'nullable|image|mimes:jpg,png|max:2048',
+
+            // changepassword
+            'current_password' => 'nullable',
+            'new_password' => 'nullable|min:8|confirmed',
+
         ];
     }
 }

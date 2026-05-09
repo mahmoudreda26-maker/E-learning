@@ -14,7 +14,7 @@
                             <i class="bi bi-people"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>1200</h6>
+                            <h6>{{ $studentsCount }}</h6>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                             <i class="bi bi-book"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>35</h6>
+                            <h6>{{ $courses }}</h6>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             <i class="bi bi-person-video3"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>12</h6>
+                            <h6>{{ $instructorsCount }}</h6>
                         </div>
                     </div>
                 </div>

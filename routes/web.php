@@ -1,7 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InstructorDashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentDashboardController;
+use Illuminate\Support\Facades\Route;
+
+
+
 
 Route::get('/', function () {
     return redirect('/register');
@@ -18,18 +25,27 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 
+
+
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard/admin', function () {
-        return view('dashboard.admin');
-    })->name('dashboard.admin');
+    Route::get('/dashboard/admin', [AdminDashboardController::class, 'index'])
+        ->name('dashboard.admin');
 
-    Route::get('/dashboard/instructor', function () {
-        return view('dashboard.instructor');
-    })->name('dashboard.instructor');
+    Route::get('/dashboard/instructor', [InstructorDashboardController::class, 'index'])
+        ->name('dashboard.instructor');
 
-    Route::get('/dashboard/student', function () {
-        return view('dashboard.student');
-    })->name('dashboard.student');
+    Route::get('/dashboard/student', [StudentDashboardController::class, 'index'])
+        ->name('dashboard.student');
 
 });
+Route::middleware('auth')->prefix('profile')->group(function () {
+
+    Route::get('/', [ProfileController::class, 'index'])->name('profile');
+
+    Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::put('/password', [ProfileController::class, 'changepassword'])->name('profile.password');
+
+});
+

@@ -55,7 +55,13 @@
             <span>Students</span>
         </a>
     </li>
-
+    <!-- profile -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('profile')}}">
+            <i class="bi bi-play-circle"></i>
+            <span>profile</span>
+        </a>
+    </li>
     <!-- Instructors -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ url('/instructors') }}">
