@@ -22,7 +22,7 @@ Schema::create('users', function (Blueprint $table) {
     $table->text('bio')->nullable();
     $table->string('phone')->nullable();
     $table->string('profile_picture')->nullable();
-    $table->boolean('status')->default(1);
+    $table->string('status')->default('active');
     $table->rememberToken();
     $table->timestamps();
 });

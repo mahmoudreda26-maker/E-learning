@@ -24,10 +24,15 @@ class Course extends Model
     }
     public function progress()
     {
-        return $this->hasMany(CourseProgress::class);
+        return $this->hasMany(CourseProgress::class );
     }
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
     }
+    public function instructors()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
 }

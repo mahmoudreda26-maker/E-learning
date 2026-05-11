@@ -36,21 +36,19 @@ public function submitLogin(LoginRequest $request)
 {
     $data = $request->validated();
 
-    if (Auth::attempt($data, $request->remember)) {
+    $rememberToken = $request->boolean('rememberToken');
+    if (Auth::attempt($data, $rememberToken)) {
 
         $request->session()->regenerate();
 
-        $user = Auth::user();
-        if ($user->role == 'admin') {
-            return redirect()->route('dashboard.admin');
-        }
-        if ($user->role == 'instructor') {
-            return redirect()->route('dashboard.instructor');
-        }
-        return redirect()->route('dashboard.student');
+        return match (Auth::user()->role) {
+            'admin' => redirect()->route('dashboard.admin'),
+            'instructor' => redirect()->route('dashboard.instructor'),
+            default => redirect()->route('dashboard.student'),
+        };
     }
 
-    return  redirect()->route('login');
+    return back()->withErrors(['email' => 'Invalid credentials']);
 }
     public function logout()
     {

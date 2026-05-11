@@ -1,0 +1,92 @@
+@extends('layouts.admin')
+@section('content')
+    <div class="container py-5">
+
+        <div class="card shadow-sm border-0">
+
+            {{-- HEADER --}}
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">Create New User</h5>
+            </div>
+
+            <div class="card-body">
+
+                <form action="{{ route('user-management.update' , $user->id )  }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <table class="table table-borderless align-middle">
+
+                        <tbody>
+
+                            {{-- NAME --}}
+                            <tr>
+                                <th width="20%">Name</th>
+                                <td>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name',$user->name) }}" placeholder="Enter name">
+                                </td>
+                            </tr>
+
+                            {{-- EMAIL --}}
+                            <tr>
+                                <th>Email</th>
+                                <td>
+                                    <input type="email" name="email" class="form-control" value="{{ old('email',$user->email) }}" placeholder="Enter email">
+                                </td>
+                            </tr>
+
+                            {{-- PASSWORD --}}
+                            <tr>
+                                <th>Password</th>
+                                <td>
+                                    <input type="password" name="password" class="form-control"
+                                        placeholder="Enter password">
+                                </td>
+                            </tr>
+
+                            {{-- ROLE --}}
+                            <tr>
+                                <th>Role</th>
+                                <td>
+                                    <select class="form-select" name="role">
+                                        <option value="admin">Admin</option>
+                                        <option value="instructor">Instructor</option>
+                                        <option value="student"> Student</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            {{-- phone --}}
+                            <tr>
+                                <th>phone</th>
+                                <td>
+                                    <input type="phone" class="form-control" value="{{ old('phone', $user->phone) }}" placeholder="Enter phone" name="phone">
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    {{-- BUTTONS --}}
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <button type="button" class="btn btn-secondary">
+                            Cancel
+                        </button>
+
+                        <div class="text-center">
+
+                            <button type="submit" class="btn btn-primary">
+                                Save
+                            </button>
+
+                        </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+@endsection
