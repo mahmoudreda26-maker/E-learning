@@ -106,7 +106,7 @@ class UserController
        $user->update($data);
         return redirect()
             ->route('user-management.index')
-            ->with('success', 'User created successfully');
+            ->with('success', 'User updated successfully');
     }
 
     /**

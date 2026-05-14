@@ -1,92 +1,115 @@
 @extends('layouts.admin')
+
 @section('content')
-    <div class="container py-5">
+<div class="container py-5">
 
-        <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0">
 
-            {{-- HEADER --}}
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0 fw-bold">Create New User</h5>
-            </div>
 
-            <div class="card-body">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold">Edit User</h5>
+        </div>
 
-                <form action="{{ route('user-management.update' , $user->id )  }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <table class="table table-borderless align-middle">
+        <div class="card-body">
 
-                        <tbody>
+            <form action="{{ route('user-management.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-                            {{-- NAME --}}
-                            <tr>
-                                <th width="20%">Name</th>
-                                <td>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name',$user->name) }}" placeholder="Enter name">
-                                </td>
-                            </tr>
+                <table class="table table-borderless align-middle">
 
-                            {{-- EMAIL --}}
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <input type="email" name="email" class="form-control" value="{{ old('email',$user->email) }}" placeholder="Enter email">
-                                </td>
-                            </tr>
+                    <tbody>
 
-                            {{-- PASSWORD --}}
-                            <tr>
-                                <th>Password</th>
-                                <td>
-                                    <input type="password" name="password" class="form-control"
-                                        placeholder="Enter password">
-                                </td>
-                            </tr>
+                        {{-- NAME --}}
+                        <tr>
+                            <th width="20%">Name</th>
+                            <td>
+                                <input type="text" name="name" class="form-control"
+                                    value="{{ old('name', $user->name) }}" placeholder="Enter name">
 
-                            {{-- ROLE --}}
-                            <tr>
-                                <th>Role</th>
-                                <td>
-                                    <select class="form-select" name="role">
-                                        <option value="admin">Admin</option>
-                                        <option value="instructor">Instructor</option>
-                                        <option value="student"> Student</option>
-                                    </select>
-                                </td>
-                            </tr>
+                                @error('name')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </td>
+                        </tr>
 
-                            {{-- phone --}}
-                            <tr>
-                                <th>phone</th>
-                                <td>
-                                    <input type="phone" class="form-control" value="{{ old('phone', $user->phone) }}" placeholder="Enter phone" name="phone">
-                                </td>
-                            </tr>
+                        {{-- EMAIL --}}
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                <input type="email" name="email" class="form-control"
+                                    value="{{ old('email', $user->email) }}" placeholder="Enter email">
 
-                        </tbody>
+                                @error('email')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </td>
+                        </tr>
 
-                    </table>
+                        {{-- PASSWORD --}}
+                        <tr>
+                            <th>Password</th>
+                            <td>
+                                <input type="password" name="password" class="form-control"
+                                    placeholder="Enter password (leave empty if not changing)">
 
-                    {{-- BUTTONS --}}
-                    <div class="d-flex justify-content-end gap-2">
+                                @error('password')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </td>
+                        </tr>
 
-                        <button type="button" class="btn btn-secondary">
-                            Cancel
-                        </button>
+                        {{-- ROLE --}}
+                        <tr>
+                            <th>Role</th>
+                            <td>
+                                <select class="form-select" name="role">
+                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="instructor" {{ $user->role == 'instructor' ? 'selected' : '' }}>Instructor</option>
+                                    <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Student</option>
+                                </select>
 
-                        <div class="text-center">
+                                @error('role')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </td>
+                        </tr>
 
-                            <button type="submit" class="btn btn-primary">
-                                Save
-                            </button>
+                        {{-- PHONE --}}
+                        <tr>
+                            <th>Phone</th>
+                            <td>
+                                <input type="text" name="phone" class="form-control"
+                                    value="{{ old('phone', $user->phone) }}" placeholder="Enter phone">
 
-                        </div>
+                                @error('phone')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </td>
+                        </tr>
 
-                </form>
+                    </tbody>
 
-            </div>
+                </table>
+
+                {{-- BUTTONS --}}
+                <div class="d-flex justify-content-end gap-2">
+
+                    <button type="button" class="btn btn-secondary">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
 
         </div>
 
     </div>
+
+</div>
 @endsection

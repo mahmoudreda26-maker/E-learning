@@ -23,16 +23,12 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //update update
+            //update
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'bio' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpg,png|max:2048',
-
-            // changepassword
-            'current_password' => 'nullable',
-            'new_password' => 'nullable|min:8|confirmed',
-
+            'email'=> 'nullable|email',
         ];
     }
 }

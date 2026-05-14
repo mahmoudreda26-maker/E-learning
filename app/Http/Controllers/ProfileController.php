@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -38,20 +39,22 @@ class ProfileController extends Controller
         return redirect()->route('profile')
             ->with('success', 'Profile updated successfully');
     }
-public function changepassword(ProfileRequest $request)
+public function changepassword(UpdatePasswordRequest $request)
 {
     $user = auth()->user();
+
     $data = $request->validated();
+
+
     if (!Hash::check($data['current_password'], $user->password)) {
         return back()->withErrors([
             'current_password' => 'Current password is incorrect'
         ]);
     }
 
-    $user->update([
-        'password' => Hash::make($data['new_password']),
-    ]);
-    return redirect()->route('profile')
-        ->with('success', 'Password updated successfully');
+    $user->password = Hash::make($data['new_password']);
+    $user->save();
+
+    return back()->with('success', 'Password updated successfully');
 }
     }

@@ -16,7 +16,12 @@
                 </a>
 
             </div>
-
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
             {{-- SEARCH + FILTER --}}
             <form method="GET" action="{{ route('user-management.index') }}" class="d-flex gap-2 mt-3 flex-wrap">
 
@@ -111,12 +116,12 @@
                                             class="btn btn-sm btn-outline-warning">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-
-                                        {{-- DELETE --}}
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $user->id }}">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        @if ($user->role != 'admin')
+                                            {{-- DELETE --}}
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $user->id }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
 
                                     </div>
 
@@ -152,25 +157,25 @@
                                                             Yes, Delete
                                                         </button>
                                                     </form>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </td>
-
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
+                        @endif
             </div>
 
         </div>
+    </div>
+    </div>
+
+    </td>
+
+    </tr>
+    @endforeach
+
+    </tbody>
+
+    </table>
+
+    </div>
+
+    </div>
 
     </div>
 
