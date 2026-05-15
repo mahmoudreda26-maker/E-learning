@@ -6,11 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    public function useres()
+    protected $fillable = [
+
+        'user_id',
+        'category_id',
+        'title',
+        'short_description',
+        'description',
+        'level',
+        'language',
+        'thumbnail',
+        'image',
+        'price',
+        'status',
+
+    ];
+    public function usere()
     {
         return $this->belongsTo(User::class);
     }
-    public function categoryes()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -24,15 +39,14 @@ class Course extends Model
     }
     public function progress()
     {
-        return $this->hasMany(CourseProgress::class );
+        return $this->hasMany(CourseProgress::class);
     }
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
     }
     public function instructors()
-{
-    return $this->belongsTo(User::class, 'user_id');
-}
-
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

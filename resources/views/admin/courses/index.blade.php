@@ -1,131 +1,122 @@
 @extends('layouts.admin')
 
 @section('content')
+    <div class="container py-4">
+        @if (auth()->user()->role !== 'student')
+            <div class="d-flex justify-content-end mb-3">
 
-<div class="container py-4">
+                <a href="{{ route('course.create') }}"
+                    class="btn btn-primary d-inline-flex align-items-center gap-2 px-3 py-2 shadow-sm">
 
-    <!-- Create Button -->
-    <div class="d-flex justify-content-end mb-3">
+                    <i class="bi bi-plus-circle"></i>
+                    <span>Create course</span>
 
-        <a href="{{ route('course.create') }}"
-           class="btn btn-primary d-inline-flex align-items-center gap-2 px-3 py-2 shadow-sm">
-
-            <i class="bi bi-plus-circle"></i>
-            <span>Create Course</span>
-
-        </a>
-
-    </div>
-
-    <!-- Grid -->
-    <div class="row">
-
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-4">
-
-            <div class="card shadow-sm h-100">
-
-                <img src="{{ asset('assets/img/news-4.jpg') }}"
-                     class="card-img-top"
-                     style="height: 180px; object-fit: cover;">
-
-                <div class="card-body">
-
-                    <h5>Course Title</h5>
-
-                    <p class="text-muted">
-                        Short description of the course goes here...
-                    </p>
-
-                    <div class="d-flex justify-content-between">
-                        <span class="badge bg-info">Beginner</span>
-                        <span class="badge bg-success">Published</span>
-                    </div>
-
-                </div>
-
-                <div class="card-footer d-flex justify-content-between">
-
-                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-
-                    <div class="d-flex gap-2">
-
-                        <a href="#" class="btn btn-sm btn-outline-warning">Edit</a>
-
-                        <form action="#" method="POST"
-                              onsubmit="return confirm('Are you sure?')">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                Delete
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
+                </a>
 
             </div>
+        @endif
+        <div class="row">
 
-        </div>
+            @foreach ($courses as $course)
+                <div class="col-lg-4 col-md-6 mb-4">
 
-        <!-- Card 2 -->
-        <div class="col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
 
-            <div class="card shadow-sm h-100">
+                        <!-- IMAGE -->
+                        <div class="position-relative">
 
-                <img src="{{ asset('assets/img/news-5.jpg') }}"
-                     class="card-img-top"
-                     style="height: 180px; object-fit: cover;">
+                            <img src="{{ asset('storage/' . $course->thumbnail) }}" class="card-img-top"
+                                style="height: 220px; object-fit: cover;">
 
-                <div class="card-body">
+                            <!-- STATUS -->
+                            <span
+                                class="badge position-absolute top-0 end-0 m-3 px-3 py-2
+                        {{ $course->status == 'published' ? 'bg-success' : 'bg-secondary' }}">
 
-                    <h5>Course Title</h5>
+                                {{ ucfirst($course->status) }}
 
-                    <p class="text-muted">
-                        Short description of the course goes here...
-                    </p>
+                            </span>
 
-                    <div class="d-flex justify-content-between">
-                        <span class="badge bg-info">Intermediate</span>
-                        <span class="badge bg-secondary">Draft</span>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="card-body d-flex flex-column">
+
+                            <div class="mb-2">
+                                <span class="badge bg-light text-dark border">
+                                    {{ $course->category->name }}
+                                </span>
+                            </div>
+
+                            <h5 class="fw-bold">
+                                {{ $course->title }}
+                            </h5>
+
+                            <p class="text-muted small flex-grow-1">
+                                {{ $course->short_description }}
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+
+                                <span class="badge bg-info-subtle text-info border">
+                                    {{ ucfirst($course->level) }}
+                                </span>
+
+                                <span class="fw-bold text-success">
+                                    {{ $course->price == 0 ? 'Free' : '$' . $course->price }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0 pb-4">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <a href="{{ route('course.show', $course->id) }}"
+                                    class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                    View
+                                </a>
+                                @if (auth()->user()->role !== 'student')
+                                    <div class="d-flex gap-2">
+
+                                        <a href="{{ route('course.edit', $course->id) }}"
+                                            class="btn btn-outline-warning btn-sm rounded-pill px-3">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('course.destroy', $course->id) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure?')">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+                                @endif
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
+            @endforeach
+            <!-- BACK BUTTON -->
+            <div class="mt-4">
 
-                <div class="card-footer d-flex justify-content-between">
-
-                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-
-                    <div class="d-flex gap-2">
-
-                        <a href="#" class="btn btn-sm btn-outline-warning">Edit</a>
-
-                        <form action="#" method="POST"
-                              onsubmit="return confirm('Are you sure?')">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                Delete
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
+                <a href="{{ route('categories.index') }}" class="btn btn-secondary">
+                    ← Back
+                </a>
 
             </div>
-
         </div>
 
     </div>
-
-</div>
-
 @endsection

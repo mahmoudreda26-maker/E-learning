@@ -5,21 +5,19 @@
         <!-- ================= MAIN ================= -->
         <li class="nav-heading">MAIN</li>
 
-<li class="nav-item">
-    <a class="nav-link"
-       href="{{
-            auth()->user()->role == 'admin'
-                ? route('dashboard.admin')
-                : (auth()->user()->role == 'instractor'
-                    ? route('dashboard.instractor')
-                    : (auth()->user()->role == 'student'
-                        ? route('dashboard.student')
-                        : '#'))
-       }}">
-        <i class="bi bi-grid"></i>
-        <span>Dashboard</span>
-    </a>
-</li>
+        <li class="nav-item">
+            <a class="nav-link"
+                href="{{ auth()->user()->role == 'admin'
+                    ? route('dashboard.admin')
+                    : (auth()->user()->role == 'instractor'
+                        ? route('dashboard.instractor')
+                        : (auth()->user()->role == 'student'
+                            ? route('dashboard.student')
+                            : '#')) }}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
         <!--  Category -->
         <li class="nav-item">

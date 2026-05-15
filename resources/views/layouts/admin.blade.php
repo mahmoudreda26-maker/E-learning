@@ -27,7 +27,7 @@
 
 <!-- Template Main CSS File -->
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-
+   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: Nov 17 2023 with Bootstrap v5.3.2
@@ -46,6 +46,11 @@
 
 <main id="main" class="main">
     @yield('content')
+        <script>
+        window.onload = function () {
+            document.body.style.display = "block";
+        }
+    </script>
 </main>
 
 @include('partials.footer')

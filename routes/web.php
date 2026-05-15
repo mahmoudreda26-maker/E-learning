@@ -52,9 +52,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('user-management', UserController::class)->middleware('admin');
 
-    Route::resource('course',CoursesController::class)->middleware('admin');
+    Route::resource('course',CoursesController::class);
 
-    Route::resource('categories',CategoriesController::class)->middleware('admin');
+    Route::resource('categories',CategoriesController::class);
 });
 
 

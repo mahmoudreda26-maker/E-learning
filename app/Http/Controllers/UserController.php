@@ -115,9 +115,6 @@ class UserController
     public function destroy(string $id)
 {
     $user = User::findOrFail($id);
-    if (auth()->id() == $user->id) {
-        return back()->with('error', 'You cannot delete your own account.');
-    }
     $user->delete();
     return redirect()
         ->route('user-management.index')

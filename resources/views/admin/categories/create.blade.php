@@ -4,40 +4,77 @@
 
 <div class="container py-4">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm border-0 rounded-4">
 
-        <div class="card-header bg-white">
-            <h4 class="mb-0">Create Category</h4>
+        <div class="card-header bg-white py-3">
+            <h4 class="mb-0 fw-bold">Create Category</h4>
         </div>
 
         <div class="card-body">
 
-            <form>
+            <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
 
-                <!-- Name -->
+                @csrf
+
+                <div class="row">
+
+                    <!-- Category Name -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Category Name</label>
+                        <input type="text"
+                               name="name"
+                               class="form-control"
+                               value="{{ old('name') }}"
+                               placeholder="Enter category name">
+
+                        @error('name')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
+
+                <!-- Image -->
                 <div class="mb-3">
-                    <label class="form-label">Category Name</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label fw-semibold">Category Image</label>
+
+                    <input type="file"
+                           name="image"
+                           class="form-control"
+                           accept="image/*">
+
+                    @error('image')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Description -->
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" rows="4"></textarea>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Description</label>
+
+                    <textarea name="description"
+                              class="form-control"
+                              rows="5"
+                              placeholder="Write category description...">{{ old('description') }}</textarea>
+
+                    @error('description')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Actions -->
                 <div class="d-flex justify-content-end gap-2">
 
-                    <a href="#"
-                       class="btn btn-secondary">
+                    <a href="{{ route('categories.index') }}"
+                       class="btn btn-light px-4">
                         Cancel
                     </a>
 
-                    <a href="#"
-                       class="btn btn-secondary">
-                        Cancel
-                    </a>
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+                        Create Category
+                    </button>
+
                 </div>
 
             </form>

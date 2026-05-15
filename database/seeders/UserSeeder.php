@@ -18,12 +18,12 @@ class UserSeeder extends Seeder
         $AdminSeeder = [
 
             // ================= ADMIN =================
-            // [
-            //     "name" => "Mahmoud Reda",
-            //     "email" => "admin@gmail.com",
-            //     "password" => Hash::make("mahmoud465"),
-            //     "role" => "admin"
-            // ],
+            [
+                "name" => "Mahmoud Reda",
+                "email" => "admin@gmail.com",
+                "password" => Hash::make("mahmoud465"),
+                "role" => "admin"
+            ],
 
             // ================= INSTRUCTORS (20) =================
             // ["name" => "Omar Hassan", "email" => "omarhassan@gmail.com", "password" => Hash::make("123456"), "role" => "instructor"],

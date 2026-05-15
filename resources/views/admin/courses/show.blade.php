@@ -1,103 +1,128 @@
 @extends('layouts.admin')
 
 @section('content')
+    <div class="container py-4">
 
-<div class="container py-4">
+        <div class="row">
 
-    <div class="row">
+            <!-- MAIN INFO -->
+            <div class="col-md-8">
 
-        <!-- Main Info -->
-        <div class="col-md-8">
+                <div class="card shadow-sm">
 
-            <div class="card shadow-sm">
+                    <!-- IMAGE -->
+                    <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://via.placeholder.com/900x300' }}"
+                        class="card-img-top" style="height: 300px; object-fit: cover;">
 
-                <!-- Image -->
-                <img src="https://via.placeholder.com/900x300"
-                     class="card-img-top"
-                     style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
 
-                <div class="card-body">
+                        <!-- TITLE -->
+                        <h3 class="fw-bold">{{ $course->title }}</h3>
 
-                    <!-- Title -->
-                    <h3>Course Title Here</h3>
-
-                    <!-- Short Description -->
-                    <p class="text-muted">
-                        This is a short description of the course that appears under the title.
-                    </p>
-
-                    <hr>
-
-                    <!-- Full Description -->
-                    <div>
-                        <h5>Description</h5>
-                        <p>
-                            Full course description goes here. You can explain everything about the course,
-                            what students will learn, and what they will achieve.
+                        <!-- SHORT DESCRIPTION -->
+                        <p class="text-muted">
+                            {{ $course->short_description }}
                         </p>
-                    </div>
 
-                    <hr>
+                        <hr>
 
-                    <!-- What you'll learn -->
-                    <div>
-                        <h5>What you'll learn</h5>
+                        <!-- FULL DESCRIPTION -->
+                        <div>
+                            <h5 class="fw-bold">Description</h5>
+                            <p>
+                                {!! nl2br(e($course->description)) !!}
+                            </p>
+                        </div>
 
-                        <ul>
-                            <li>Learn HTML, CSS, and JavaScript</li>
-                            <li>Build real projects</li>
-                            <li>Understand backend basics</li>
-                        </ul>
+                        <hr>
+
+                        <!-- WHAT YOU'LL LEARN -->
+                        <div>
+                            <h5 class="fw-bold">What you'll learn</h5>
+
+                            <ul>
+                                <li>Learn HTML, CSS, and JavaScript</li>
+                                <li>Build real projects</li>
+                                <li>Understand backend basics</li>
+                            </ul>
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- SIDE INFO -->
+            <div class="col-md-4">
 
-        <!-- Side Info -->
-        <div class="col-md-4">
+                <!-- COURSE INFO -->
+                <div class="card shadow-sm mb-3">
 
-            <div class="card shadow-sm mb-3">
+                    <div class="card-body">
 
-                <div class="card-body">
+                        <h5 class="fw-bold">Course Info</h5>
 
-                    <h5>Course Info</h5>
+                        <hr>
 
-                    <hr>
+                        <p><strong>Category:</strong>
+                            {{ $course->category->name }}
+                        </p>
 
-                    <p><strong>Category:</strong> Web Development</p>
-                    <p><strong>Level:</strong> Beginner</p>
-                    <p><strong>Language:</strong> English</p>
-                    <p><strong>Price:</strong> Free</p>
+                        <p><strong>Level:</strong>
+                            {{ ucfirst($course->level) }}
+                        </p>
 
-                    <hr>
+                        <p><strong>Language:</strong>
+                            {{ $course->language }}
+                        </p>
 
-                    <p><strong>Status:</strong>
-                        <span class="badge bg-success">Published</span>
-                    </p>
+                        <p><strong>Price:</strong>
+                            {{ $course->price == 0 ? 'Free' : '$' . $course->price }}
+                        </p>
+
+                        <hr>
+
+                        <p><strong>Status:</strong>
+                            @if ($course->status == 'published')
+                                <span class="badge bg-success">Published</span>
+                            @else
+                                <span class="badge bg-secondary">Draft</span>
+                            @endif
+                        </p>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <!-- ACTIONS -->
+                <div class="card shadow-sm">
 
-            <!-- Actions -->
-            <div class="card shadow-sm">
+                    <div class="card-body">
+                        @if (auth()->user()->role !== 'student')
+                            <h5 class="fw-bold mb-3">Actions</h5>
 
-                <div class="card-body d-grid gap-2">
+                            <div class="d-grid gap-2">
 
-                    <button class="btn btn-primary">
-                        Edit Course
-                    </button>
+                                <!-- ADD SECTION -->
+                                <a href="#" class="btn btn-success">
 
-                    <button class="btn btn-warning">
-                        Change Status
-                    </button>
+                                    Add Section / Lesson
+                                </a>
 
-                    <button class="btn btn-danger">
-                        Delete Course
-                    </button>
+                                <!-- EDIT -->
+                                <a href="{{ route('course.edit', $course->id) }}" class="btn btn-warning">
+
+                                    Edit Section /Lesson
+                                </a>
+                        @endif
+                        <!-- BACK -->
+                        <a href="{{ route('course.index') }}" class="btn btn-secondary">
+
+                            ← Back to Courses
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -107,6 +132,5 @@
 
     </div>
 
-</div>
-
+    </div>
 @endsection

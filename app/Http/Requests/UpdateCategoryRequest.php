@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,18 +21,11 @@ class UpdateUserRequest extends FormRequest
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-     {
+    {
         return [
-            "name" => "nullable|string|min:3|max:255",
-            "email" => "nullable|email",
-            "password" => "nullable|min:8",
-            'role' => 'nullable|in:admin,instructor,student',
-            'phone' => 'nullable|min:11|max:15',
-            'status' => 'nullable',
+            'name' => 'nullable|string|min:3|max:255',
+            'description' => 'nullable|string|max:500',
+            'image' => 'nullable|image|mimes:jpg,png|max:2048',
         ];
     }
 }
-
-
-
-

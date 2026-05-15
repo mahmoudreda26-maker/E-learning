@@ -87,7 +87,15 @@
                                 @enderror
                             </td>
                         </tr>
+                         <tr>
+                                <th>Status</th>
+                                <td>
+                                    <input type="radio" name="status" value="active"> active
+                                    <br>
+                                    <input type="radio" name="status" value="inactive"> inactive
 
+                                </td>
+                            </tr>
                     </tbody>
 
                 </table>

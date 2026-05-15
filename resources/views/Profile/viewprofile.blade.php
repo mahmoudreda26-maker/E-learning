@@ -5,15 +5,24 @@
     <div class="pagetitle">
         <h1>Profile</h1>
 
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('dashboard.admin') }}">Home</a>
-                </li>
-                <li class="breadcrumb-item">Users</li>
-                <li class="breadcrumb-item active">Profile</li>
-            </ol>
-        </nav>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item">
+            <a href="{{ auth()->user()->role == 'admin'
+                ? route('dashboard.admin')
+                : (auth()->user()->role == 'instractor'
+                    ? route('dashboard.instractor')
+                    : route('dashboard.student')) }}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Profile
+        </li>
+
+    </ol>
+</nav>
     </div>
 
     <section class="section profile">
@@ -85,31 +94,143 @@
                             </div>
 
                             <!-- EDIT -->
-                            <div class="tab-pane fade" id="edit">
+<div class="tab-pane fade" id="edit">
 
-                                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
+    <div class="card border-0 shadow-sm rounded-4">
 
-                                    <input type="file" name="image" class="form-control mb-3">
+        <div class="card-header bg-white border-0 py-4">
+            <h4 class="fw-bold mb-1">Edit Profile</h4>
+            <p class="text-muted mb-0">
+                Update your personal information and profile picture
+            </p>
+        </div>
 
-                                    <input type="text"
-                                           name="name"
-                                           class="form-control mb-3"
-                                           value="{{ old('name',$user->name) }}">
+        <div class="card-body p-4">
 
-                                    <input type="text"
-                                           name="phone"
-                                           class="form-control mb-3"
-                                           value="{{ old('phone',$user->phone) }}">
+            <form action="{{ route('profile.update') }}"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-                                    <textarea name="bio" class="form-control mb-3">{{ old('bio',$user->bio) }}</textarea>
+                @csrf
+                @method('PUT')
 
-                                    <button class="btn btn-primary">Save</button>
-                                </form>
+                {{-- PROFILE IMAGE --}}
+                <div class="text-center mb-4">
 
+                    <div class="position-relative d-inline-block">
+
+                        <img src="{{ $user->image ? asset('storage/'.$user->image) : asset('default.png')}}"
+                             class="rounded-circle shadow"
+                             width="120"
+                             height="120"
+                             style="object-fit: cover;">
+
+                    </div>
+
+                    <div class="mt-3">
+
+                        <input type="file"
+                               name="image"
+                               class="form-control">
+
+                        @error('image')
+                            <div class="text-danger small mt-2">
+                                {{ $message }}
                             </div>
+                        @enderror
 
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    {{-- NAME --}}
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Full Name
+                        </label>
+
+                        <input type="text"
+                               name="name"
+                               class="form-control form-control-lg"
+                               placeholder="Enter your name"
+                               value="{{ old('name',$user->name) }}">
+
+                        @error('name')
+                            <div class="text-danger small mt-2">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    {{-- PHONE --}}
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        <input type="text"
+                               name="phone"
+                               class="form-control form-control-lg"
+                               placeholder="Enter phone number"
+                               value="{{ old('phone',$user->phone) }}">
+
+                        @error('phone')
+                            <div class="text-danger small mt-2">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                {{-- BIO --}}
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Bio
+                    </label>
+
+                    <textarea name="bio"
+                              rows="5"
+                              class="form-control"
+                              placeholder="Tell something about yourself...">{{ old('bio',$user->bio) }}</textarea>
+
+                    @error('bio')
+                        <div class="text-danger small mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                {{-- BUTTONS --}}
+                <div class="d-flex justify-content-end gap-2">
+
+                    <button type="reset"
+                            class="btn btn-light px-4">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary px-5">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
                             <!-- PASSWORD -->
                             <div class="tab-pane fade" id="password">
 
